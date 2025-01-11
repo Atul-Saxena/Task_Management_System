@@ -1,10 +1,13 @@
 import Tasks from "../models/task.model.js";
+import User from "../models/user.model.js";
 
 const createTask = async (req, res) => {
     const { title, description, status, priority, dueDate, assignedTo } = req.body;
     try {
-        const task = await Tasks.create({ title, description, status, priority, dueDate, assignedTo });
-        res.status(200).json(task);
+        const user = await User.find({ username: assignedTo });
+        
+        const task = await Tasks.create({ title, description, status, priority, dueDate, assignedTo: user[0]._id });
+        res.status(200).json({task, message:"Task created successfully"});
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });
@@ -26,7 +29,8 @@ const getOneTask = async (req, res) => {
     const { id } = req.params;
     try {
         const task = await Tasks.findById(id);
-        res.status(200).json(task);
+        const user = await User.find({ _id: task.assignedTo });
+        res.status(200).json({data:task,assignedTo:user[0].username});
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });
@@ -36,6 +40,8 @@ const getOneTask = async (req, res) => {
 const getAllTasks = async (req, res) => {
     try {
         const tasks = await Tasks.find();
+        // const user = await User.find({ _id: assignedTo });
+        
         res.status(200).json(tasks);
     } catch (error) {
         console.log(error);
@@ -59,7 +65,7 @@ const deleteTask = async (req, res) => {
     const { id } = req.params;
     try {
         const task = await Tasks.findByIdAndDelete(id);
-        res.status(200).json(task);
+        res.status(200).json({task, message:"Task deleted successfully"});
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });

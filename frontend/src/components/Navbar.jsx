@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
 
+const Navbar = () => {
+    const [admin, setAdmin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const hyperlinks = [
@@ -10,11 +11,15 @@ const Navbar = () => {
         { name: 'MyTasks', href: '/mytasks' },
     ]
 
+    useEffect(() => {
+        setAdmin(JSON.parse(localStorage.getItem("admin")));
+      }, []);
+
 
     return (
         <nav className="bg-gray-800 text-white p-2 shadow-md mb-4 sticky top-0">
             <div className="container mx-auto flex justify-between items-center">
-                <h1 className="text-base font-bold">NewsApp</h1>
+                <h1 className="text-base font-bold">Task Manager</h1>
                 <button
                     className="sm:hidden text-white focus:outline-none"
                     onClick={() => setIsOpen(!isOpen)}
@@ -47,24 +52,27 @@ const Navbar = () => {
                             </li>
                         ))
                     }
-
-                    <Link
-                        className="group relative inline-block overflow-hidden border outline-none border-white px-4 py-2 focus:outline-none focus:ring"
-                        to="/createtask"
-                    >
-                        <span
-                            className="absolute inset-y-0 right-0 w-[2px] bg-white transition-all group-hover:w-full group-active:bg-black"
-                        ></span>
-
-                        <span
-                            className="relative text-sm font-medium text-white transition-colors group-hover:text-black"
+                    {
+                        admin ?
+                        (<Link
+                            className="group relative inline-block overflow-hidden border border-white px-4 py-2 focus:outline-none"
+                            to="/createtask"
                         >
-                            Create Task
-                        </span>
-                    </Link>
+                            <span
+                                className="absolute inset-y-0 right-0 w-[2px] bg-white transition-all group-hover:w-full group-active:bg-black"
+                            ></span>
+
+                            <span
+                                className="relative text-sm font-medium text-white transition-colors group-hover:text-black"
+                            >
+                                Create Task
+                            </span>
+                        </Link>):null
+                        
+                    }
 
                     <button
-                        className="group relative inline-block overflow-hidden border outline-none border-white px-4 py-2 focus:outline-none focus:ring"
+                        className="group relative inline-block overflow-hidden border outline-none border-white px-4 py-2 focus:outline-none"
                         onClick={() => {
                             localStorage.removeItem("authenticated");
                             localStorage.removeItem("token");

@@ -20,7 +20,7 @@ const MyTasks = () => {
   const totalPages = Math.ceil(mytasks.length / tasksPerPage);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/task/mytasks/${ID}`)
+    axios.get(`http://localhost:5000/api/task/getmytasks/${ID}`)
       .then((res) => {
         setMytasks(res.data);
       })
@@ -42,7 +42,7 @@ const MyTasks = () => {
             </tr>
           </thead>
           <tbody>
-            {currentTasks.map((task, index) => (
+            {currentTasks.length > 0 ? currentTasks.map((task, index) => (
               <tr
                 key={index}
                 className="border-b hover:bg-gray-50 transition"
@@ -57,7 +57,13 @@ const MyTasks = () => {
                   {new Date(task.dueDate).toLocaleDateString()}
                 </td>
               </tr>
-            ))}
+            )): (
+              <tr>
+                <td colSpan="5" className="px-4 py-2 border text-center">
+                  No tasks assigned to you now
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

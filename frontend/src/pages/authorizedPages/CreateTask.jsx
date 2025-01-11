@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import TaskForm from "../../components/TaskForm";
 
 const CreateTask = () => {
   const [admin, setAdmin] = useState(false);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     setAdmin(JSON.parse(localStorage.getItem("admin")));
     console.log(admin);
-    
-    axios.get("http://localhost:5000/api/users/allusers")
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.log(err));
+
   }, []);
 
   if (admin) {
     return (
-      <>hii</>
+      <TaskForm />
     )
   }
   else {
