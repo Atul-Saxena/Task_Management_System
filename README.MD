@@ -27,7 +27,7 @@ To run this project, ensure the following are installed:
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/Atul-Saxena/Task_Management_System.git
-   cd your-repo-name
+   cd Task_Management_System
     ```
 
 2. **Add MongoDB Connection URL:**
