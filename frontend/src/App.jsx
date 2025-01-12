@@ -7,6 +7,7 @@ import MyTasks from './pages/authorizedPages/MyTasks'
 import Task from './pages/authorizedPages/Task'
 import CreateTask from './pages/authorizedPages/CreateTask'
 import ProtectedRoute from './components/ProtectedRoute'
+import UpdateForm from './components/UpdateForm'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/mytasks" element={<ProtectedRoute><MyTasks /></ProtectedRoute>} />
           <Route path="/createtask" element={<ProtectedRoute><CreateTask /></ProtectedRoute>} />
+          <Route path="/updatetask" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
           <Route path="/task/:id" element={<ProtectedRoute><Task /></ProtectedRoute>} />
           </Routes>
         </Router>

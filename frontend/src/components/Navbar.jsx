@@ -74,6 +74,10 @@ const Navbar = () => {
                     <button
                         className="group relative inline-block overflow-hidden border outline-none border-white px-4 py-2 focus:outline-none"
                         onClick={() => {
+                            const confirmLogout = window.confirm("Are you sure you want to logout?");
+                            if (!confirmLogout) {
+                                return;
+                            }
                             localStorage.removeItem("authenticated");
                             localStorage.removeItem("token");
                             localStorage.removeItem("userID");

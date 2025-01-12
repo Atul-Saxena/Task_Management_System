@@ -77,6 +77,9 @@ const SignUp = () => {
                         />
                         <label htmlFor="admin" className="text-black font-bold ">Sign up as Manager </label>
                     </div>
+                    <div className="mb-4">
+                        <p className="text-sm text-gray-600">* Only manager can create Tasks and assign them to other users</p>
+                    </div>
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"

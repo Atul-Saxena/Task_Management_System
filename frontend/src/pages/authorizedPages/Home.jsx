@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import TaskCard from "../../components/TaskCard";
 
+
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const tasksPerPage = 5;
@@ -21,11 +22,6 @@ const Home = () => {
 
   }, []);
 
-  useEffect(() => {
-    console.log(tasks);
-
-  }, [tasks]);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -35,7 +31,13 @@ const Home = () => {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-6">Task List</h1>
-
+      <div className="flex justify-center m-5">
+        <p>priority tasks colour theme:</p>
+        <div className="flex flex-col sm:flex-row items-center justify-center space-x-0 sm:space-x-4 space-y-2 sm:space-y-0">
+          <span className="bg-green-100 px-2 py-1 rounded">High</span>
+          <span className="bg-yellow-100 px-2 py-1 rounded">Low</span>
+        </div>
+      </div>
       {currentTasks.length > 0 ? (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 overflow-hidden">
           {currentTasks.map((task, index) => (

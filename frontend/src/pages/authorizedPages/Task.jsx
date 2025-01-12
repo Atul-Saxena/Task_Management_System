@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'
+import { useTaskContext } from '../../context/TaskContext';
 
 const Task = () => {
   const { id } = useParams();
   const [task, setTask] = useState({ data: { title: '', description: '', status: '', priority: false, dueDate: '', assignedTo: '' }, assignedTo: '' });
 
   const navigate = useNavigate();
+  const editTaskValuse = useTaskContext();
 
   const fetchTask = async () => {
     try {
@@ -16,6 +18,25 @@ const Task = () => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const markComplete = async () => {
+    const confirmComplete = window.confirm('Are you sure you want to mark this task as complete?');
+    if (!confirmComplete) return;
+
+    try {
+      const { _id, title, description, status, priority, dueDate, assignedTo } = editTaskValuse.task;
+      await axios.put(`http://localhost:5000/api/task/update/${id}`, { title, description, status: 'Completed', priority, dueDate, assignedTo });
+      console.log(title, description, status, priority, dueDate, assignedTo);
+      
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleEdit = () => {
+    navigate(`/updatetask`);
   }
 
   const deleteTask = async () => {
@@ -80,8 +101,11 @@ const Task = () => {
 
           {/* Action Button */}
           <div className="mt-6">
-            <button className="w-full py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+            <button onClick={markComplete} className="w-full py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
               Mark as Complete
+            </button>
+            <button onClick={handleEdit} className="w-full py-3 mt-5 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+              Edit
             </button>
             <button onClick={deleteTask} className="w-full py-3 mt-5 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
               Delete
