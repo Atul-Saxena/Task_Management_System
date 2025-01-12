@@ -26,7 +26,7 @@ To run this project, ensure the following are installed:
 ### Backend Setup
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/Atul-Saxena/Task_Management_System.git
    cd your-repo-name
     ```
 
